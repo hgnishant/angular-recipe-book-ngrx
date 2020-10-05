@@ -5,7 +5,8 @@ import { Store } from '@ngrx/store';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
 import { LoggingService } from '../logging.service';
-
+import * as fromShoppingList from './store/shopping-list.reducer'; //as per convention "fromShoppingList" is used
+import * as ShoppingListActions from './store/shopping-list.action'; 
 
 @Component({
   selector: 'app-shopping-list',
@@ -19,14 +20,16 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   constructor(
     private slService: ShoppingListService,
     private loggingService: LoggingService,
-    private store : Store<{ShoppingList : {ingredients : Ingredient[]}}>
+    private store : Store<fromShoppingList.AppState>
+    //private store : Store<{ShoppingList : {ingredients : Ingredient[]}}> AppState is used now and this is commented out
   ) {}
   //ShoppingList must be teh same name as u registerd in app.module.ts file
   //ingredients must be the same name as in reducer.This defines the store (initial state)
 
   ngOnInit() {
 
-    this.ingredients=this.store.select('ShoppingList'); //it gives  a slice
+    this.ingredients=this.store.select("shoppingList"); //it gives  a slice
+    console.log('in shopping lis ing :'+ this.ingredients);
     // if u don't want to use "async" in template and want to return array like 
     // before then u can subscribe to it as it's an observable this.store.select('ShoppingList').subscribe()
 
@@ -42,7 +45,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   onEditItem(index: number) {
-    this.slService.startedEditing.next(index);
+   // this.slService.startedEditing.next(index);
+   this.store.dispatch(new ShoppingListActions.StartEdit(index));
   }
 
   ngOnDestroy() {

@@ -6,15 +6,31 @@ import * as ShoppingListActions from "./shopping-list.action"; //to rename is mu
 //current state before it was changed, action that triggers reducer and state updates
 
 //
-const initialState = {
+
+export interface State {
+  //if we dont define this, we will have to change the parametres
+  //everywhere whenever we add something new to our initialstate object
+  ingredients: Ingredient[];
+  editedIngredient: Ingredient;
+  editedItemIndex: number;
+}
+
+export interface AppState {
+  //this appState is for application level
+  shoppingList: State;
+}
+
+const initialState: State = {
   ingredients: [new Ingredient("Apples", 5), new Ingredient("Tomatoes", 10)],
+  editedIngredient: null,
+  editedItemIndex: -1,
 };
 
 //assign default value to state
 //Action is ian Interface which enforces "type" property
 //action is of the cutom type exported by you
 export function shoppingListReducer(
-  state = initialState,
+  state: State  = initialState,
   action: ShoppingListActions.ShoppingListActions
 ) {
   //find out the type of action and modify the state
@@ -53,6 +69,20 @@ export function shoppingListReducer(
         ingredients: state.ingredients.filter((ig, igIndex) => {
           return igIndex !== action.payload;
         }),
+      };
+    case ShoppingListActions.START_EDIT:
+      return {
+        //set to the index u r getting as pauyload. First of all copy the existing state
+        ...state,
+        editedItemIndex : action.payload,
+        editedIngredient : {...state.ingredients[action.payload]} //return new object
+      };
+    case ShoppingListActions.STOP_EDIT:
+      return {
+        ...state,
+        editedItemIndex:-1,
+        editedIngredient:null
+
       };
     default:
       return state; //return the original unchanged state
