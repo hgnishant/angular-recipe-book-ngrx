@@ -7,6 +7,7 @@ import { Ingredient } from '../shared/ingredient.model';
 import { LoggingService } from '../logging.service';
 import * as fromShoppingList from './store/shopping-list.reducer'; //as per convention "fromShoppingList" is used
 import * as ShoppingListActions from './store/shopping-list.action'; 
+import * as fromApp from "../store/app.reducer";
 
 @Component({
   selector: 'app-shopping-list',
@@ -20,7 +21,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   constructor(
    // private slService: ShoppingListService,
     private loggingService: LoggingService,
-    private store : Store<fromShoppingList.AppState>
+    // private store : Store<fromShoppingList.AppState>
+    private store : Store<fromApp.AppState>
     //private store : Store<{ShoppingList : {ingredients : Ingredient[]}}> AppState is used now and this is commented out
   ) {}
   //ShoppingList must be teh same name as u registerd in app.module.ts file

@@ -7,6 +7,7 @@ import { Ingredient } from "../shared/ingredient.model";
 import { Store } from "@ngrx/store";
 import * as ShoppingListActions from "../shopping-list/store/shopping-list.action"; //to rename is must 
 import * as fromShoppingList from '../shopping-list/store/shopping-list.reducer'; //as per convention "fromShoppingList" is used
+import * as fromApp from '../store/app.reducer';
 
 @Injectable()
 export class RecipeService {
@@ -30,7 +31,7 @@ export class RecipeService {
 
   constructor(
     //private slService: ShoppingListService,
-    private store: Store<fromShoppingList.AppState>
+    private store: Store<fromApp.AppState>
     // private store: Store<{ ShoppingList: { ingredients: Ingredient[] } }>
   ) {}
 

@@ -4,6 +4,7 @@ import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
 import * as ShoppingListActions from "../store/shopping-list.action"; //to rename is must
 import * as fromShoppingList from "../store/shopping-list.reducer"; //as per convention "fromShoppingList" is used
+import * as fromApp from "../../store/app.reducer";
 
 import { Ingredient } from "../../shared/ingredient.model";
 //import { ShoppingListService } from "../shopping-list.service";
@@ -22,7 +23,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   constructor(
     //private slService: ShoppingListService,
-    private store: Store<fromShoppingList.AppState>
+    //private store: Store<fromShoppingList.AppState>
+    private store: Store<fromApp.AppState>
   ) //private store: Store<{ ShoppingList: { ingredients: Ingredient[] } }>
   {}
 

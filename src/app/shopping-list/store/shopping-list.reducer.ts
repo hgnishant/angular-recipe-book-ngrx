@@ -16,10 +16,10 @@ export interface State {
   editedItemIndex: number;
 }
 
-export interface AppState {
-  //this appState is for application level
-  shoppingList: State;
-}
+// export interface AppState {
+//   //this appState is for application level
+//   shoppingList: State;
+// }
 
 const initialState: State = {
   ingredients: [new Ingredient("Apples", 5), new Ingredient("Tomatoes", 10)],
