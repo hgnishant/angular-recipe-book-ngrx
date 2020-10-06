@@ -1,4 +1,5 @@
 import { Action } from "@ngrx/store";
+
 import { Ingredient } from "../../shared/ingredient.model";
 import * as ShoppingListActions from "./shopping-list.action"; //to rename is must
 //provide a reducer
@@ -51,24 +52,28 @@ export function shoppingListReducer(
         //without spreading it will create a nested array
       };
     case ShoppingListActions.UPDATE_INGREDIENT:
-      const ingredient = state.ingredients[action.payload.index]; //get the original ingredients for that index
+      const ingredient = state.ingredients[state.editedItemIndex]; //get the original ingredients for that index
       const updatedIngredient = {
         ...ingredient,
-        ...action.payload.newIngredient,
+        ...action.payload,
       }; //ceate the udated one
       const updatedIngredients = [...state.ingredients];
-      updatedIngredients[action.payload.index] = updatedIngredient;
+      updatedIngredients[state.editedItemIndex] = updatedIngredient;
       return {
         ...state,
         ingredients: updatedIngredients,
+        editedItemIndex :-1,
+        editedIngredient :null
       };
 
     case ShoppingListActions.DELETE_INGREDIENT:
       return {
         ...state,
         ingredients: state.ingredients.filter((ig, igIndex) => {
-          return igIndex !== action.payload;
+          return igIndex !== state.editedItemIndex;
         }),
+        editedItemIndex:-1,
+        editedIngredient:null
       };
     case ShoppingListActions.START_EDIT:
       return {
