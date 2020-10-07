@@ -6,7 +6,7 @@ export interface State {
 }
 
 const initialState: State = {
-  user: null,
+  user: null
 };
 
 export function authReducer(
@@ -30,5 +30,7 @@ export function authReducer(
             ...state,
             user:null
         };
+        default:
+          return state;
   }
 }
