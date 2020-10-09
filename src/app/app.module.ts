@@ -14,6 +14,10 @@ import { LoggingService } from "./logging.service";
 import * as fromApp from './store/app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth/store/auth.effect';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { RecipeEffects } from './recipes/store/recipe.effects';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -26,7 +30,9 @@ import { AuthEffects } from './auth/store/auth.effect';
     //   auth: authReducer,
     // }), as we have merged these reducers, we write as below:
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects,RecipeEffects]),
+    StoreDevtoolsModule.instrument({logOnly:environment.production }),
+    StoreRouterConnectingModule.forRoot(),
     SharedModule,
     CoreModule,
   ],
